@@ -3938,5 +3938,21 @@ function handleComplete(evt,comp) {
 		</div>
 	</div>
     <div id='_preload_div_' style='position:absolute; top:0; left:0; display: inline-block; height:1286px; width: 1835px; text-align: center;'>	<span style='display: inline-block; height: 100%; vertical-align: middle;'></span>	<img src=images/_preloader.gif style='vertical-align: middle; max-height: 100%'/></div>
+<script>
+function resizeCanvas() {
+  var canvas = document.getElementById("canvas");
+  var container = document.getElementById("animation_container");
+
+  var w = container.offsetWidth;
+  var h = container.offsetHeight;
+
+  canvas.style.width = w + "px";
+  canvas.style.height = h + "px";
+}
+
+window.addEventListener("resize", resizeCanvas);
+window.addEventListener("orientationchange", resizeCanvas);
+resizeCanvas();
+</script>
 </body>
 </html>
