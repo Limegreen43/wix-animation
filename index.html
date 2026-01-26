@@ -3939,20 +3939,49 @@ function handleComplete(evt,comp) {
 	</div>
     <div id='_preload_div_' style='position:absolute; top:0; left:0; display: inline-block; height:1286px; width: 1835px; text-align: center;'>	<span style='display: inline-block; height: 100%; vertical-align: middle;'></span>	<img src=images/_preloader.gif style='vertical-align: middle; max-height: 100%'/></div>
 <script>
+<script>
 function resizeCanvas() {
-  var canvas = document.getElementById("canvas");
-  var container = document.getElementById("animation_container");
+  const canvas = document.getElementById("canvas");
+  const container = document.getElementById("animation_container");
+  if (!canvas || !container) return;
 
-  var w = container.offsetWidth;
-  var h = container.offsetHeight;
+  // If your canvas is positioned, force true centering
+  container.style.display = "grid";
+  container.style.placeItems = "center";
+  container.style.width = "100%";
+  container.style.height = "100%";
 
-  canvas.style.width = w + "px";
-  canvas.style.height = h + "px";
+  // Use viewport size so rotate-back is correct
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  // Match the *element* size
+  canvas.style.width = vw + "px";
+  canvas.style.height = vh + "px";
+
+  // If you're using a real <canvas>, also match internal resolution (prevents blur)
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width  = Math.round(vw * dpr);
+  canvas.height = Math.round(vh * dpr);
 }
 
-window.addEventListener("resize", resizeCanvas);
-window.addEventListener("orientationchange", resizeCanvas);
+function resizeCanvasDelayed() {
+  // iOS needs a beat after orientation change
+  setTimeout(resizeCanvas, 250);
+}
+
+window.addEventListener("resize", resizeCanvas, { passive: true });
+window.addEventListener("orientationchange", resizeCanvasDelayed, { passive: true });
+window.addEventListener("pageshow", resizeCanvas, { passive: true });
+
 resizeCanvas();
 </script>
-</body>
-</html>
+Also make sure your container can actually fill the viewport (this matters for centering). Add/confirm this in your CSS:
+
+html, body { margin: 0; height: 100%; overflow: hidden; }
+#animation_container { width: 100vw; height: 100vh; }
+#canvas { display: block; }
+That should stop the “rotate back = not centered” behavior.
+
+If it’s still o
+
