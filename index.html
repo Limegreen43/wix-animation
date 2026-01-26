@@ -2590,7 +2590,7 @@ if (reversed == null) { reversed = false; }
 p.nominalBounds = rect = new cjs.Rectangle(-75.6,-28.9,153,59);
 p.frameBounds = [rect, new cjs.Rectangle(-69,-22,137,43.3)];
 // stage content:
-(lib.CaseStudyTEST2 = function(mode,startPosition,loop,reversed) {
+(lib.CaseStudyTEST = function(mode,startPosition,loop,reversed) {
 if (loop == null) { loop = false; }
 if (reversed == null) { reversed = false; }
 	var props = new Object();
@@ -2621,11 +2621,6 @@ if (reversed == null) { reversed = false; }
 		function refreshStageMetrics(){
 		  actualStageWidth  = stage.canvas.width / stage.scaleX;
 		  actualStageHeight = stage.canvas.height / stage.scaleY;
-			if (exportRoot && exportRoot.zoomContainer_mc) {
-		    stageInitX = exportRoot.zoomContainer_mc.x;
-		    stageInitY = exportRoot.zoomContainer_mc.y;
-		  }
-		}
 		  // update the “home” position after resizes
 		  stageInitX = exportRoot.zoomContainer_mc.x;
 		  stageInitY = exportRoot.zoomContainer_mc.y;
@@ -2837,8 +2832,7 @@ if (reversed == null) { reversed = false; }
 			this.zoomContainer_mc.x = left;
 			this.zoomContainer_mc.y = top;
 			if(this.zoomContainer_mc.scaleY == 1) this.resetDisplay();
-		.bind(this);
-		}
+		}.bind(this)
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//
 		// navigation event handlers
@@ -3282,7 +3276,7 @@ function handleComplete(evt,comp) {
 	var preloaderDiv = document.getElementById("_preload_div_");
 	preloaderDiv.style.display = 'none';
 	canvas.style.display = 'block';
-	exportRoot = new lib.CaseStudyTEST2();
+	exportRoot = new lib.CaseStudyTEST();
 	stage = new lib.Stage(canvas);
 	stage.enableMouseOver();	
 	//Registers the "tick" event listener.
