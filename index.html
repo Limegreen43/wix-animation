@@ -3938,8 +3938,10 @@ function handleComplete(evt,comp) {
 		</div>
 	</div>
     <div id='_preload_div_' style='position:absolute; top:0; left:0; display: inline-block; height:1286px; width: 1835px; text-align: center;'>	<span style='display: inline-block; height: 100%; vertical-align: middle;'></span>	<img src=images/_preloader.gif style='vertical-align: middle; max-height: 100%'/></div>
-<script>
-<script>//NEW Code starts here
+</body>
+</html>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3977,46 +3979,50 @@ canvas {
 <script src="YOUR_ANIMATE_EXPORT.js"></script>
 
 <script>
-/* ====== SET THESE TO YOUR ANIMATE STAGE SIZE ====== */
-const DESIGN_W = 1920;   // e.g. 1080 if square
+/* ===== SET TO YOUR ANIMATE STAGE SIZE ===== */
+const DESIGN_W = 1920;
 const DESIGN_H = 1080;
-/* ================================================= */
+/* ========================================= */
 
 const canvas = document.getElementById("canvas");
-const container = document.getElementById("animation_container");
-
 const stage = new createjs.Stage(canvas);
-// Animate usually exposes root via exportRoot
 stage.addChild(exportRoot);
 
 function resizeCanvas() {
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
   const dpr = window.devicePixelRatio || 1;
 
-  // Canvas resolution
+  // visualViewport fixes mobile Safari rotation bugs
+  const vw = window.visualViewport?.width  || window.innerWidth;
+  const vh = window.visualViewport?.height || window.innerHeight;
+
+  // Canvas buffer (device pixels)
   canvas.width  = Math.round(vw * dpr);
   canvas.height = Math.round(vh * dpr);
 
-  // Canvas CSS size
-  canvas.style.width = vw + "px";
+  // Canvas element (CSS pixels)
+  canvas.style.width  = vw + "px";
   canvas.style.height = vh + "px";
 
-  // Scale stage to fit
-  const scale = Math.min(vw / DESIGN_W, vh / DESIGN_H);
+  // Stage math is done in CANVAS PIXELS
+  const cw = canvas.width;
+  const ch = canvas.height;
+
+  const scale = Math.min(cw / DESIGN_W, ch / DESIGN_H);
 
   stage.scaleX = stage.scaleY = scale;
-
-  // Center stage
-  stage.x = (vw - DESIGN_W * scale) / 2;
-  stage.y = (vh - DESIGN_H * scale) / 2;
+  stage.x = (cw - DESIGN_W * scale) / 2;
+  stage.y = (ch - DESIGN_H * scale) / 2;
 
   stage.update();
 }
 
-// iOS Safari needs delay after rotate
 function resizeCanvasDelayed() {
-  setTimeout(resizeCanvas, 250);
+  // double RAF + delay = stable after rotate-back
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      setTimeout(resizeCanvas, 150);
+    });
+  });
 }
 
 window.addEventListener("resize", resizeCanvas, { passive: true });
