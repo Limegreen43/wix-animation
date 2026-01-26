@@ -2137,6 +2137,11 @@ if (reversed == null) { reversed = false; }
 	}
 	// actions tween:
 	this.timeline.addTween(cjs.Tween.get(this).call(this.frame_0).wait(1).call(this.frame_1).wait(1).call(this.frame_2).wait(1).call(this.frame_3).wait(1).call(this.frame_4).wait(1).call(this.frame_5).wait(1));
+	// Vector - Do Not Touch
+	this.shape = new cjs.Shape();
+	this.shape.graphics.f("rgba(255,255,255,0.008)").s().p("EiPWBclMAAAi5JMEetAAAMAAAC5Jg");
+	this.shape.setTransform(2032.4129,-137.6775,1.0894,1.6163);
+	this.timeline.addTween(cjs.Tween.get(this.shape).wait(6));
 	// Layer_2
 	this.instance = new lib.Infographic();
 	this.instance.setTransform(-661,-503,1.4587,1.4587);
@@ -2147,26 +2152,27 @@ if (reversed == null) { reversed = false; }
 	this.animation1 = new lib.MC_Animation_2();
 	this.animation1.name = "animation1";
 	this.animation1.setTransform(0,2.3,1,1,0,0,0,835,365.3);
-	this.instance_2 = new lib.MC_Animation_3();
-	this.instance_2.setTransform(5.75,-39.6,1,1,0,0,0,768.4,470.9);
-	this.animation2 = new lib.MC_Animation_1();
+	this.animation2 = new lib.MC_Animation_3();
 	this.animation2.name = "animation2";
-	this.animation2.setTransform(0,2.3,1,1,0,0,0,835,365.3);
-	this.timeline.addTween(cjs.Tween.get({}).to({state:[{t:this.animation1}]}).to({state:[{t:this.instance_2}]},1).to({state:[]},1).to({state:[{t:this.animation2}]},2).to({state:[]},1).wait(1));
+	this.animation2.setTransform(5.75,-39.6,1,1,0,0,0,768.4,470.9);
+	this.animation3 = new lib.MC_Animation_1();
+	this.animation3.name = "animation3";
+	this.animation3.setTransform(0,2.3,1,1,0,0,0,835,365.3);
+	this.timeline.addTween(cjs.Tween.get({}).to({state:[{t:this.animation1}]}).to({state:[{t:this.animation2}]},1).to({state:[]},1).to({state:[{t:this.animation3}]},2).to({state:[]},1).wait(1));
 	// -886, -610
-	this.instance_3 = new lib._1();
+	this.instance_2 = new lib._1();
+	this.instance_2.setTransform(-888,-990);
+	this.instance_3 = new lib._2();
 	this.instance_3.setTransform(-888,-990);
-	this.instance_4 = new lib._2();
+	this.instance_4 = new lib._3();
 	this.instance_4.setTransform(-888,-990);
-	this.instance_5 = new lib._3();
+	this.instance_5 = new lib._3b();
 	this.instance_5.setTransform(-888,-990);
-	this.instance_6 = new lib._3b();
+	this.instance_6 = new lib._4();
 	this.instance_6.setTransform(-888,-990);
-	this.instance_7 = new lib._4();
+	this.instance_7 = new lib._5();
 	this.instance_7.setTransform(-888,-990);
-	this.instance_8 = new lib._5();
-	this.instance_8.setTransform(-888,-990);
-	this.timeline.addTween(cjs.Tween.get({}).to({state:[{t:this.instance_3}]}).to({state:[{t:this.instance_4}]},1).to({state:[{t:this.instance_5}]},1).to({state:[{t:this.instance_6}]},1).to({state:[{t:this.instance_7}]},1).to({state:[{t:this.instance_8}]},1).wait(1));
+	this.timeline.addTween(cjs.Tween.get({}).to({state:[{t:this.instance_2}]}).to({state:[{t:this.instance_3}]},1).to({state:[{t:this.instance_4}]},1).to({state:[{t:this.instance_5}]},1).to({state:[{t:this.instance_6}]},1).to({state:[{t:this.instance_7}]},1).wait(1));
 	this._renderFirstFrame();
 }).prototype = p = new cjs.MovieClip();
 p.nominalBounds = rect = new cjs.Rectangle(-1529.5,-1095.3,4561.5,1956.7);
@@ -2534,7 +2540,7 @@ if (reversed == null) { reversed = false; }
 	this.animationContainer_mc.setTransform(-4,-2.5);
 	this.timeline.addTween(cjs.Tween.get(this.animationContainer_mc).wait(1));
 	this._renderFirstFrame();
-}).prototype = getMCSymbolPrototype(lib.zoomWindow, rect = new cjs.Rectangle(-1062,-992.5,1982.7,1851.3), [rect]);
+}).prototype = getMCSymbolPrototype(lib.zoomWindow, rect = new cjs.Rectangle(-1062,-1097.8,4090,1956.7), [rect]);
 (lib.mc_resetButton = function(mode,startPosition,loop,reversed) {
 if (loop == null) { loop = false; }
 if (reversed == null) { reversed = false; }
