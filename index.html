@@ -3279,15 +3279,14 @@ function handleComplete(evt,comp) {
 	exportRoot = new lib.CaseStudyTEST();
 	stage = new lib.Stage(canvas);
 	stage.enableMouseOver();
-	stage.addChild(exportRoot);
-	stage.update();
 	
 	// --- Resize/orientation stability (Robin) ---
 function safeResetAfterResize(){
   try {
     if (typeof resizeCanvas === "function") resizeCanvas();
     if (typeof refreshStageMetrics === "function") refreshStageMetrics();
-    if (exportRoot && exportRoot.resetDisplay) exportRoot.resetDisplay();
+    if (exportRoot && exportRoot.resetDisplay && stage && stage.getNumChildren() > 0) {
+		exportRoot.resetDisplay();
     if (stage && stage.update) stage.update();
   } catch (e) {}
 }
