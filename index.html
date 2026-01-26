@@ -3939,34 +3939,83 @@ function handleComplete(evt,comp) {
 	</div>
     <div id='_preload_div_' style='position:absolute; top:0; left:0; display: inline-block; height:1286px; width: 1835px; text-align: center;'>	<span style='display: inline-block; height: 100%; vertical-align: middle;'></span>	<img src=images/_preloader.gif style='vertical-align: middle; max-height: 100%'/></div>
 <script>
+<script>//NEW Code starts here
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+#animation_container {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+canvas {
+  display: block;
+}
+</style>
+</head>
+
+<body>
+
+<div id="animation_container">
+  <canvas id="canvas"></canvas>
+</div>
+
+<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+<script src="YOUR_ANIMATE_EXPORT.js"></script>
+
 <script>
+/* ====== SET THESE TO YOUR ANIMATE STAGE SIZE ====== */
+const DESIGN_W = 1920;   // e.g. 1080 if square
+const DESIGN_H = 1080;
+/* ================================================= */
+
+const canvas = document.getElementById("canvas");
+const container = document.getElementById("animation_container");
+
+const stage = new createjs.Stage(canvas);
+// Animate usually exposes root via exportRoot
+stage.addChild(exportRoot);
+
 function resizeCanvas() {
-  const canvas = document.getElementById("canvas");
-  const container = document.getElementById("animation_container");
-  if (!canvas || !container) return;
-
-  // If your canvas is positioned, force true centering
-  container.style.display = "grid";
-  container.style.placeItems = "center";
-  container.style.width = "100%";
-  container.style.height = "100%";
-
-  // Use viewport size so rotate-back is correct
   const vw = window.innerWidth;
   const vh = window.innerHeight;
+  const dpr = window.devicePixelRatio || 1;
 
-  // Match the *element* size
+  // Canvas resolution
+  canvas.width  = Math.round(vw * dpr);
+  canvas.height = Math.round(vh * dpr);
+
+  // Canvas CSS size
   canvas.style.width = vw + "px";
   canvas.style.height = vh + "px";
 
-  // If you're using a real <canvas>, also match internal resolution (prevents blur)
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width  = Math.round(vw * dpr);
-  canvas.height = Math.round(vh * dpr);
+  // Scale stage to fit
+  const scale = Math.min(vw / DESIGN_W, vh / DESIGN_H);
+
+  stage.scaleX = stage.scaleY = scale;
+
+  // Center stage
+  stage.x = (vw - DESIGN_W * scale) / 2;
+  stage.y = (vh - DESIGN_H * scale) / 2;
+
+  stage.update();
 }
 
+// iOS Safari needs delay after rotate
 function resizeCanvasDelayed() {
-  // iOS needs a beat after orientation change
   setTimeout(resizeCanvas, 250);
 }
 
@@ -3976,12 +4025,6 @@ window.addEventListener("pageshow", resizeCanvas, { passive: true });
 
 resizeCanvas();
 </script>
-Also make sure your container can actually fill the viewport (this matters for centering). Add/confirm this in your CSS:
 
-html, body { margin: 0; height: 100%; overflow: hidden; }
-#animation_container { width: 100vw; height: 100vh; }
-#canvas { display: block; }
-That should stop the “rotate back = not centered” behavior.
-
-If it’s still o
-
+</body>
+</html>
